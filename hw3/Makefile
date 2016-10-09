@@ -21,7 +21,7 @@ clean:
 	rm report/report.pdf
 
 tests:
-	cd code: Rscript test-that.R
+	cd code; Rscript test-that.R
 
 session-info.txt:
 	cd code/scripts; Rscript session-info-script.R
