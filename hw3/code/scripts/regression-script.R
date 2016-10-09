@@ -2,7 +2,7 @@
 #Also produces a scatter with regression line - save in PNG
 #Predict Relationship between the variables
 
-adData = read.csv(file = "../data/Advertising.csv")
+adData = read.csv(file = "../../data/Advertising.csv")
 
 tv = adData$TV
 radio = adData$Radio
@@ -22,7 +22,32 @@ save(rel_tv_sales,rel_radio_sales,rel_newspaper_sales, file = "../data/regressio
 
 
 
-png('../images/scatterplot-tv-sales.png')
-plot(TV, Sales)
-abline(adModel)
+#Making scatter plots
+png('../../images/scatterplot-tv-sales.png')
+plot(tv, sales)
+abline(rel_tv_sales)
+dev.off()
+
+png('../../images/scatterplot-radio-sales.png')
+plot(radio, sales)
+abline(rel_radio_sales)
+dev.off()
+
+png('../../images/scatterplot-newspaper-sales.png')
+plot(newspaper, sales)
+abline(rel_newspaper_sales)
+dev.off()
+
+#Making plots from lm
+lm.collective <- lm(Sales ~ TV + Newspaper + Radio, data = adData)
+png('../../images/residual-plot.png')
+plot(lm.SR, which = 1)
+dev.off()
+
+png('../../images/scale-location-plot.png')
+plot(lm.SR, which = 3)
+dev.off()
+
+png('../../images/normal-qq-plot.png')
+plot(lm.SR, which = 2)
 dev.off()

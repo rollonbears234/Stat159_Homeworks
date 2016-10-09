@@ -1,6 +1,6 @@
 #Reads in data and computes summary statistic
 
-adData = read.csv(file = "../data/Advertising.csv")
+adData = read.csv(file = "../../data/Advertising.csv")
 
 tv = adData$TV
 radio = adData$Radio
@@ -9,7 +9,7 @@ sales = adData$Sales
 
 
 #Saving Summary Statistics to eda-output.txt
-sink(file = "../data/eda-output.txt")
+sink(file = "../../data/eda-output.txt")
 
 #Summary Statistics
 
@@ -30,29 +30,28 @@ cor_matrix
 sink()
 
 #Saving Correlation Matrix
-save(cor_matrix, file = "../data/correlation-matrix.RData")
-
+save(cor_matrix, file = "../../data/correlation-matrix.RData")
 
 
 #Adding Histograms to Images
-png('../images/histogram-sales.png')
+png('../../images/histogram-sales.png')
 hist(sales, main = "Sales")
 dev.off()
 
-png('../images/histogram-tv.png')
+png('../../images/histogram-tv.png')
 hist(tv, main = "TV")
 dev.off()
 
-png('../images/histogram-radio.png')
+png('../../images/histogram-radio.png')
 hist(radio, main = "Radio")
 dev.off()
 
-png('../images/histogram-newspaper.png')
+png('../../images/histogram-newspaper.png')
 hist(sales, main = "Newspaper")
 dev.off()
 
 #Scatterplot Matrix
-png('../images/scatterplot-matrix.png')
+png('../../images/scatterplot-matrix.png')
 pairs(~TV+Radio+Newspaper+Sales,data=adData,
    main="Scatterplot Matrix")
 dev.off()
