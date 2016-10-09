@@ -13,16 +13,13 @@ This project largely builds on the content that we worked on in HW02.
 We will learn to combine our previous skills and make a simple report from a MakeFile.
 
 **Notes from the Professor**
-So far we have been focused on introducing and learning the basic tools
-typically used in computational reproducible workflows (e.g. bash, git, github,
-Make, markdown, pandoc, and some text editor). However, we haven't done any
-statistical data analysis... yet.
+The purpose of this assignment is to extend the scope of the previous HW.
+In addition to keep applying regression analysis in R---using `lm()`---you
+will also write some functions as well as their unit tests.
 
-The purpose of this assignment is to give you the opportunity to start applying
-the computational toolkit (plus R) to reproduce a simple regression analysis.
-More specifically, the idea is to reproduce the analysis from Section 3.1
-(pages 59 to 71), of _Chapter 3. Linear Regression_,
-from the book "An Introduction to Statistical Learning" (by James et al):
+Your mission consists of reproducing the analysis from Section 3.2
+(pages 71 to 82), from the book "An Introduction to Statistical Learning"
+(by James et al):
 
 [http://www-bcf.usc.edu/~gareth/ISL/](http://www-bcf.usc.edu/~gareth/ISL/)
 
@@ -30,71 +27,120 @@ The data set is in the `Advertising.csv` file available here:
 
 [http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv](http://www-bcf.usc.edu/~gareth/ISL/Advertising.csv)
 
+The main analysis involves carrying out a __multiple linear regression__ with
+predictor variables `TV`, `Radio`, `Newspaper`, and the response variable
+`Sales`. The ultimate output will be a report replicating the following
+results from Chapter 3:
+
+- Table 3.3 (page 72): Coefficient estimates of simple regression models:
+`Sales` on `TV`, `Sales` on `Radio`, and `Sales` on `Newspaper`. The book only
+shows two tables (those of `Radio` and `Newspaper`) but you should also
+include the table for `TV`.
+- Table 3.4 (page 74): Coefficient estimates of the least squares model.
+- Table 3.5 (page 75): Correlation matrix.
+- Table 3.6 (page 76): $RSE$, $R^2$ and $F$-statistic of the least squares model.
 
 
 ### Introduction
 
-We want to be able to replicate this result, possibly if the data changes or anthing else changes, we can call upon our MakeFile to change everything for us.
+We want to be able to replicate this result, possibly if the data changes or anything else changes, we can call upon our MakeFile to change everything for us.
 
-The analysis involves carrying out a simple linear regression of `TV`
-advertising on `Sales` of a particular product. The overall idea is to write a
-report in which you are able to replicate.
+The analysis involves carrying out a multiple linear regression trying to predict sales from TV, Newspaper, Radio.
 
 ### Data
 
 Along with the description of the Advertising data set bellow by the professor, we also utilize an RData file with the regression results in it and another text file with the statistical summaries of the data.
+
+Relationships looking at specifically;
+1. Sales - TV
+2. Sales - Radio
+3. Sales - Newspaper
+
 
 **From the Professor**
 The Advertising data set consists of the Sales (in thousands of units) of a particular product in 200 different markets, along with advertising budgets (in thousands of dollars) for the product in each of those markets for three different media: TV, Radio, and Newspaper.
 
 ### Methodology
 
-Utilizing the function lm (linear model), we get the coefficients for a regression line. Using the method of least squares, we estimate coefficients for the equation y = mx + b
+Utilizing the function lm (linear model), we get the coefficients for a regression line. Using the method of least squares, we estimate coefficients for the equation y = mx + b. This time, we do this with multiple variables and even combine them into a single model as shown in the qq-plot and residual.
 
-Sales = m(TV) + b
+Eventually we can get:
+
+Sales = a(TV) + b(Sales) + c(Radio) + d
 
 ###### Steps takes for the project
    1. gather data
    2. produce the linear model from the data
    3. export all data and create the images
    4. Make the make file connecting everything
-   5. Write the report and then run the make file to output a PDF file of the report
+   5. Make functions to run statistical tests
+   6. Write tests to make sure we wrote the functions right
+   7. Write the report and then run the make file to output a PDF file of the report
 
 ### Results
 
 ```{r echo=TRUE}
 load("../data/regression.Rdata")
-summary = summary(rel_tv_sales)
-summary = summary(rel_radio_sales)
-summary = summary(rel_newspaper_sales)
-
+summarySales = summary(rel_tv_sales)
+summaryRadio = summary(rel_radio_sales)
+summaryNewspaper = summary(rel_newspaper_sales)
+summarySales
+summaryRadio
+summaryNewspaper
 ```
 
+Bellow we can find the correlation between all the variables
 
-The relationships seems to be corrolated. the R-Squared value is above .6 which indicates a relationship, but not a strongly corrolated one.
+```{r echo=TRUE}
+load("../data/correlation-matrix.Rdata")
+cor_matrix
+```
 
-Bellow are some plots to illustrate the data provided in Advertising.csv
-
-![Histogram Sales](../images/histogram-sales.png)
-
-
-![Histogram Data](../images/histogram-tv.png)
+The data we are interested in compares the different variables to sales. Sales has the lowest correlation with Newspaper and the most with TV.
 
 
-![Scatterplot TV vs. Sales](../images/scatterplot-tv-sales.png)
 
 > The data has an interesting trend. The spread increases over time. As the TV variables increases, the data points become less concentrated around the sales data. Also interesting is the large P value for the data. This does not seem to be data produced by chance.
 
 
 ### Additional Questions
 
-1. Is at least one of the predictors useful in predicting the respone?
+1. Is at least one of the predictors useful in predicting the response?
+    * I think the TV variable is a good at predicting the response. The p-value also shows that this result is highly unlikely to have happened by chance, hinting at a useful predictor.
 2. Do all predictors help to explain the response, or are only a subset of predictors useful?
+     * They are all statistically significant with a p > .05, but to varying degrees or magnitude. Some of the relationships are undeniably related.
 3. How well does the model fit the data?
+     * Looking at the scatterplots and the RSS, the model does an okay job at fitting the data, more so TV than the others. With Sales and Newspaper, it is hard to see the linear relationship from the line  
 4. How accurate is the prediction
-
+     * For this, lets look at the residual plot bellow and the qq-plot.
+     * The qq-plot looks pretty good within two quantiles of the middle.
+     * The residual plot isn't great, but the trend is definitely there and I would feel reasonably comfortable with my prediction.
 
 ### Conclusions
 
 
-To summarize, in this proejct I automated my workflow to gather data and produce the images and the data for a report. Then the RMD file synthesizes that information and uses its dynamic capabilities to include the images and code in the report.
+To summarize, we built upon the last homework by adding more variables, making functions to calculate meaningful statistics, and were able to make better decisions about the relationships between variables. We now have a feasable model to predict sales from TV, Radio, and Newspaper.
+
+
+--- 
+
+### Plots
+
+
+
+![Histogram Sales](../images/histogram-sales.png)
+
+
+![Histogram TV](../images/histogram-tv.png)
+
+
+![Scatterplot Worst](../images/scatterplot-newspaper-sales.png)
+
+
+![Scatterplot Matrix](../images/scatterplot-matrix.png)
+
+
+![Scatterplot Matrix](../images/residual-plot.png)
+
+
+![Scatterplot Matrix](../images/normal-qq-plot.png)
