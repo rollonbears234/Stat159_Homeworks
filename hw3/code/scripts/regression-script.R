@@ -16,9 +16,9 @@ rel_newspaper_sales = lm(formula = sales ~ newspaper)
 
 summary_tv_sales = summary(rel_tv_sales)
 summary_radio_sales = summary(rel_radio_sales)
-summary_newspaper_sales = summary(rel_newspaper_sales)
+summary_newspaper_sales = summary(summary_radio_sales)
 
-save(rel_tv_sales,rel_radio_sales,rel_newspaper_sales, file = "../data/regression.RData")
+save(rel_tv_sales,rel_radio_sales,rel_newspaper_sales, file = "../../data/regression.RData")
 
 
 
@@ -41,13 +41,13 @@ dev.off()
 #Making plots from lm
 lm.collective <- lm(Sales ~ TV + Newspaper + Radio, data = adData)
 png('../../images/residual-plot.png')
-plot(lm.SR, which = 1)
+plot(lm.collective, which = 1)
 dev.off()
 
 png('../../images/scale-location-plot.png')
-plot(lm.SR, which = 3)
+plot(lm.collective, which = 3)
 dev.off()
 
 png('../../images/normal-qq-plot.png')
-plot(lm.SR, which = 2)
+plot(lm.collective, which = 2)
 dev.off()

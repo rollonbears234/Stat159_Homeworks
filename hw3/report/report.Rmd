@@ -8,6 +8,8 @@ urlcolor: blue
 
 ### Abstract
 
+This project largely builds on the content that we worked on in HW02.
+
 We will learn to combine our previous skills and make a simple report from a MakeFile.
 
 **Notes from the Professor**
@@ -62,8 +64,10 @@ Sales = m(TV) + b
 
 ```{r echo=TRUE}
 load("../data/regression.Rdata")
-summary = summary(adModel)
-summary
+summary = summary(rel_tv_sales)
+summary = summary(rel_radio_sales)
+summary = summary(rel_newspaper_sales)
+
 ```
 
 
@@ -81,6 +85,13 @@ Bellow are some plots to illustrate the data provided in Advertising.csv
 
 > The data has an interesting trend. The spread increases over time. As the TV variables increases, the data points become less concentrated around the sales data. Also interesting is the large P value for the data. This does not seem to be data produced by chance.
 
+
+### Additional Questions
+
+1. Is at least one of the predictors useful in predicting the respone?
+2. Do all predictors help to explain the response, or are only a subset of predictors useful?
+3. How well does the model fit the data?
+4. How accurate is the prediction
 
 
 ### Conclusions

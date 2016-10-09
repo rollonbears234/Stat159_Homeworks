@@ -2,10 +2,12 @@
 
 sink(file = "../../session-info.txt")
 
-#library calls
-library()
+
 
 #Session Info
 sessionInfo()
+
+#library calls
+library()
 
 sink()

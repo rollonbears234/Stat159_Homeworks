@@ -12,4 +12,4 @@ Code for this project is broken down into three parts
 3. Tests - Use these to test the Functions
 
 
-**test-that.R**: will be used as extra testing/miscellaneous  
+**test-that.R**: This runs the tests in the test folder  
