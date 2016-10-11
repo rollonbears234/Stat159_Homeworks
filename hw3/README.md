@@ -1,3 +1,9 @@
+### How to Run
+1. Pull from this directory
+2. Go to that directory and run make report
+3. If you want to delete the report type in make clean
+
+
 Instructions
 
 HW03 due on Friday Oct-14
