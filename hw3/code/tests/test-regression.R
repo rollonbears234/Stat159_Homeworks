@@ -1,7 +1,6 @@
 require(testthat)
 
 source("functions/regression-functions.R")
-source("tests/test-regression.R")
 
 load("../data/regression.RData")
 
